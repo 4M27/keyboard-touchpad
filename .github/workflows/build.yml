@@ -1,16 +1,14 @@
 name: Build EXE
 
-on:
-  push:
-    branches: [ "main" ]
-  workflow_dispatch:
+on: [push]
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -19,13 +17,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pynput pyinstaller
+          pip install pyinstaller
 
       - name: Build EXE
         run: |
           pyinstaller --onefile keyboard_touchpad.py
 
-      - name: Upload artifact
+      - name: Upload EXE
         uses: actions/upload-artifact@v3
         with:
           name: keyboard_touchpad
